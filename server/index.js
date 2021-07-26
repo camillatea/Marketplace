@@ -1,7 +1,9 @@
+const shajs = require('sha.js');
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+
 
 //middleware
 app.use(cors())
@@ -100,6 +102,44 @@ app.delete("/owned/:id", async(req, res) => {
         res.json("Owned was deleted");
     } catch (err) {
         console.error("Couldn't delete Owned.")
+        console.error(err.message);
+    }
+})
+
+//ROUTES FOR USERS 
+app.get("/users/:email", async(req, res) => {
+    try {
+        const {email} = req.params;
+        const getUser = await pool.query("SELECT * FROM users WHERE email = $1", [email]);       
+        res.json(getUser.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+app.get("/users", async(req, res) => {
+    try {
+        const allUsers = await pool.query("SELECT * FROM users");
+
+        res.json(allUsers.rows);
+    } catch (err) {
+        console.error(err.message)
+    }
+})
+
+app.post("/users", async(req, res) => {
+    try {
+        const {email, password} = req.body;
+        const salt = await Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15); 
+        const hashed = shajs('sha256').update(password + salt).digest('hex')
+        const newUser = await pool.query(
+            "INSERT INTO users (email, passHash, salt) VALUES ($1, $2, $3) RETURNING *", 
+            [email, hashed, salt]
+        );
+        console.log("User was created!");
+        res.json(newUser.rows[0]);
+    } catch (err) {
+        console.error("Failed to add Owned Item.")
         console.error(err.message);
     }
 })

@@ -91,6 +91,9 @@ const UserSign = () => {
     return (
         <div className="container">
         <h1>Zeb's Marketplace</h1>
+        <div className="mast">
+            <p>Active User is: {activeUser}</p> <button onClick={() => signOut()}>Sign out. </button>
+        </div>
             <div className="wrapper">
             
                 <div className="sign">

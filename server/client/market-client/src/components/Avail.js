@@ -3,6 +3,8 @@ import './Avail.css'
 
 const Avail = () => {
     const [avails, setAvails] = useState([]);
+    
+    const activeUser = localStorage.getItem('user');
 
     const deleteAvail = async (id) => {
         try {
@@ -18,7 +20,7 @@ const Avail = () => {
 
     const buyAvail = async (id, name, description, imgpath) => {
         try {
-            const body = {name, description, imgpath};
+            const body = {name, description, imgpath, activeUser};
             const response = await fetch("http://localhost:5000/owned", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},

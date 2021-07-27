@@ -68,10 +68,10 @@ app.delete("/avail/:id", async(req, res) => {
 //ROUTES FOR OWNED ITEMS
 app.post("/owned", async(req, res) => {
     try {
-        const {name, description, imgpath} = req.body;
+        const {name, description, imgpath, activeUser} = req.body;
         const newOwned = await pool.query(
-            "INSERT INTO owned (name, description, imgpath) VALUES ($1, $2, $3) RETURNING *", 
-            [name, description, imgpath]
+            "INSERT INTO owned (name, description, imgpath, owner) VALUES ($1, $2, $3, $4) RETURNING *", 
+            [name, description, imgpath, activeUser]
         );
         res.json(newOwned.rows[0]);
         console.log(req.body);
@@ -85,6 +85,19 @@ app.get("/owned", async(req, res) => {
     try {
         const allOwned= await pool.query(
             "SELECT * FROM owned"
+        );
+        res.json(allOwned.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+app.get("/owned/:email", async(req, res) => {
+    try {
+        const {email} = req.params;
+        const allOwned= await pool.query(
+            "SELECT * FROM owned WHERE owner = $1",
+            [email]
         );
         res.json(allOwned.rows);
     } catch (err) {

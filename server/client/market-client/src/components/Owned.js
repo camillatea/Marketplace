@@ -4,6 +4,8 @@ import './Avail.css'
 const Owned = () => {
     const [owneds, setOwned] = useState([]);
 
+    const activeUser = localStorage.getItem('user');
+
     const deleteOwned = async (id) => {
         try {
             const deleteOwned = await fetch(`http://localhost:5000/owned/${id}`, {
@@ -33,11 +35,13 @@ const Owned = () => {
 
     const getOwned = async() => {
         try {
-            const response = await fetch('http://localhost:5000/owned')
-            const jsonData = await response.json()
+            if (activeUser !== '') {
+                const response = await fetch(`http://localhost:5000/owned/${activeUser}`)
+                const jsonData = await response.json()
 
-            console.log(jsonData);
-            setOwned(jsonData);
+                console.log(jsonData);
+                setOwned(jsonData);
+            }
         } catch (err) {
             console.error(err.message);
         }

@@ -20,14 +20,18 @@ const Avail = () => {
 
     const buyAvail = async (id, name, description, imgpath) => {
         try {
-            const body = {name, description, imgpath, activeUser};
-            const response = await fetch("http://localhost:5000/owned", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(body)
-            });
-            deleteAvail(id);
-            window.location ="/";
+            if(activeUser !== '') {
+                const body = {name, description, imgpath, activeUser};
+                const response = await fetch("http://localhost:5000/owned", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(body)
+                });
+                deleteAvail(id);
+                window.location ="/";
+            } else {
+                alert("Sign in to buy items.")
+            }
         } catch (err) {
             console.error(err.message);
         }

@@ -7,13 +7,13 @@ import Owned from './components/Owned';
 //components
 
 function App() {
-  return <Fragment>
+  return (
   <div className="container">
     <UserSign />
     <Avail />
     <Owned />
   </div>
-  </Fragment>;
+  )
 }
 
 export default App;

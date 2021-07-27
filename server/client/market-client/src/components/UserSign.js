@@ -1,4 +1,5 @@
 import React, { Component, Fragment, useEffect, useState} from 'react'
+import './UserSign.css';
 
 import sha256 from 'sha.js';
 
@@ -88,25 +89,28 @@ const UserSign = () => {
 
     console.log(listUsers);
     return (
-        <Fragment>
-        <div>
-        <h1>Active User: {activeUser} </h1>
-        <button onClick={() => signOut()}>Sign out. </button>
-        </div>
-            <form className="d-flex mt-5" onSubmit={checker}>
-            <input type="text" onChange={e => setEmail(e.target.value)}/>
-            <input type="password" onChange={e => setPass(e.target.value)}/>
-            <input type="submit" value="Submit"/>
-            </form>
+        <div className="container">
+        <h1>Zeb's Marketplace</h1>
+            <div className="wrapper">
             
-            <p>Sign in:</p>
-            <form className="d-flex mt-5" onSubmit={signIn}>
-            <input type="text" onChange={e => setEmail(e.target.value)}/>
-            <input type="password" onChange={e => setPass(e.target.value)}/>
-            <input type="submit" value="Submit"/>
-            </form>
-        </Fragment>
+                <div className="sign">
+                    <form className="d-flex mt-5" onSubmit={checker}>
+                        <input type="text" onChange={e => setEmail(e.target.value)}/>
+                        <input type="password" onChange={e => setPass(e.target.value)}/>
+                        <input type="submit" value="Sign Up"/>
+                    </form>
+                </div>
+                <div className="sign">
+                    <form className="d-flex mt-5" onSubmit={signIn}>
+                        <input type="text" onChange={e => setEmail(e.target.value)}/>
+                        <input type="password" onChange={e => setPass(e.target.value)}/>
+                        <input type="submit" value="Sign In"/>
+                    </form>
+                </div>
+            </div>
+        </div>
     )
 }
-//<button onClick ={() => checker('zebgrand27@gmail.com')}>Click to create new User!</button>
+//<button onClick ={() => checker('zebgrand27@gmail.com')}>Click to create new User!</button> <button onClick={() => signOut()}>Sign out. </button>
+
 export default UserSign

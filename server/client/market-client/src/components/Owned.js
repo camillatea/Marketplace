@@ -57,7 +57,11 @@ const Owned = () => {
         <Fragment>
         <div className="container">
         <br/>
+        {activeUser !== 'user' ? (
         <h3>Owned Cards:</h3>
+        ) : (
+            <h3>Sign up to view your Inventory!</h3>
+        )}
             <div className="market-items-wrapper">
                 {owneds.map(owned=> (
                 <div className="market-items">

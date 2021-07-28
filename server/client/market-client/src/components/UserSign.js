@@ -11,7 +11,7 @@ const UserSign = () => {
     const activeUser = localStorage.getItem('user');
 
     const signOut = async() => {
-        localStorage.setItem('user', '');
+        localStorage.setItem('user', 'user');
         window.location= "/"
     }
 
@@ -67,7 +67,8 @@ const UserSign = () => {
             }
 
         } else {
-            alert("Doesn't exist... Sign up?")
+            alert("Doesn't exist... Signing you up now.")
+            newUser();
         }
     }
     //Check if Username Exists...
@@ -89,31 +90,42 @@ const UserSign = () => {
 
     console.log(listUsers);
     return (
-        <div className="container">
-        <h1>Zeb's Marketplace</h1>
-        <div className="mast">
-            <p>Active User is: {activeUser}</p> <button onClick={() => signOut()}>Sign out. </button>
-        </div>
             <div className="wrapper">
-            
+                {activeUser !== 'user' ? (
+                    <div className="wrapper">
+                    <div className="sign">
+                        <p style={{fontSize: '10px', paddingTop: '13px'}}>Welcome back {activeUser}!</p>
+                    </div>
+                    <div className="sign">
+                        <button onClick={() => signOut()} style={{width: '70px', height: '20px', fontSize: '10px'}}>Sign out.</button>
+                    </div>
+                    </div>
+                ) : (
+                    <div className="wrapper">
+
                 <div className="sign">
-                    <form className="d-flex mt-5" onSubmit={checker}>
-                        <input type="text" onChange={e => setEmail(e.target.value)}/>
-                        <input type="password" onChange={e => setPass(e.target.value)}/>
-                        <input type="submit" value="Sign Up"/>
+                    <form className="d-flex" onSubmit={signIn}>
+                        <input type="text" onChange={e => setEmail(e.target.value)} style={{width: '100px', height: '20px', fontSize: '10px'}}/>
+
+                        <input type="password" onChange={e => setPass(e.target.value)} style={{width: '100px', height: '20px', fontSize: '10px'}}/>
+
+                        <input type="submit" value="Sign In / Sign Up" style={{width: '100px', height: '20px', fontSize: '10px'}}/>
                     </form>
                 </div>
-                <div className="sign">
-                    <form className="d-flex mt-5" onSubmit={signIn}>
-                        <input type="text" onChange={e => setEmail(e.target.value)}/>
-                        <input type="password" onChange={e => setPass(e.target.value)}/>
-                        <input type="submit" value="Sign In"/>
-                    </form>
                 </div>
+                )}
             </div>
-        </div>
     )
 }
 //<button onClick ={() => checker('zebgrand27@gmail.com')}>Click to create new User!</button> <button onClick={() => signOut()}>Sign out. </button>
+//<button onClick={() => signOut()} style={{width: '70px', height: '20px', fontSize: '10px'}}>Sign out. </button>
+/*                     <div className="sign">
+
+                    <form className="d-flex" onSubmit={checker}>
+                        <input type="text" onChange={e => setEmail(e.target.value)} style={{width: '100px', height: '20px', fontSize: '10px'}}/>
+                        <input type="password" onChange={e => setPass(e.target.value)} style={{width: '100px', height: '20px', fontSize: '10px'}}/>
+                        <input type="submit" value="Sign Up" style={{width: '50px', height: '20px', fontSize: '10px'}}/>
+                    </form>
+                </div>*/
 
 export default UserSign

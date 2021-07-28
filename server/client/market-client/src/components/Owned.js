@@ -56,17 +56,22 @@ const Owned = () => {
     return (
         <Fragment>
         <div className="container">
-        <h1>Owned:</h1>
+        <br/>
+        <h3>Owned Cards:</h3>
             <div className="market-items-wrapper">
                 {owneds.map(owned=> (
                 <div className="market-items">
-                    <ul>
-                        <li>{owned.name}</li>
-                        <li>{owned.description}</li>
-                        <li><img src ={require(`./images/${owned.imgpath}.png`).default} alt="For the Item" style={{marginBottom: "10px"}}/></li>
-                        <li><button className="btn btn-danger" onClick={() => 
-                        sellOwned(owned.owned_id, owned.name, owned.description, owned.imgpath)}>Sell</button></li>
-                    </ul>
+                    <div className="market-img-wrap">
+                        <div className="market-img" style={{ background: `url(${require('./images/' + owned.imgpath + '.png').default}) no-repeat`}}>
+                            <div className="item-name">
+                                <h1>{owned.name}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                        <p>{owned.description}</p>
+                        <button className="btn btn-danger" onClick={() => 
+                        sellOwned(owned.owned_id, owned.name, owned.description, owned.imgpath)}>Sell</button>
                 </div>    
                 ))}
             </div>

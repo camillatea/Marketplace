@@ -20,7 +20,7 @@ const Avail = () => {
 
     const buyAvail = async (id, name, description, imgpath) => {
         try {
-            if(activeUser !== '') {
+            if(activeUser !== 'user') {
                 const body = {name, description, imgpath, activeUser};
                 const response = await fetch("http://localhost:5000/owned", {
                     method: "POST",
@@ -58,18 +58,24 @@ const Avail = () => {
     return (
         <Fragment>
         <div className="container">
-        <h1>Available:</h1>
+        <br/>
+        <h3>Available Cards:</h3>
             <div className="market-items-wrapper">
                 {avails.map(available => (
-                <div className="market-items">
-                    <ul>
-                        <li>{available.name}</li>
-                        <li>{available.description}</li>
-                        <li><img src ={require(`./images/${available.imgpath}.png`).default} alt="For the Item" style={{marginBottom: "10px"}}/></li>
-                        <li><button className="btn btn-danger" onClick={() => 
-                        buyAvail(available.avail_id, available.name, available.description, available.imgpath)}>Buy</button></li>
-                    </ul>
-                </div>    
+                    <div className="market-items">
+                        <div className="market-img-wrap">
+                            <div className="market-img" style={{ background: `url(${require('./images/' + available.imgpath + '.png').default}) no-repeat`}}>
+                                <div className="item-name">
+                                    <h1>{available.name}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                            <p>{available.description}</p>
+                                <button className="btn btn-success" onClick={() => 
+                                buyAvail(available.avail_id, available.name, available.description, available.imgpath)}>Buy</button>
+
+                    </div>
                 ))}
             </div>
         </div>
@@ -78,5 +84,6 @@ const Avail = () => {
     )
 }
 
+//<li><img src ={require(`./images/${available.imgpath}.png`).default} alt="For the Item" style={{marginBottom: "10px"}}/></li>
 
 export default Avail;
